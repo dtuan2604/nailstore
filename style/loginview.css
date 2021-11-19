@@ -1,0 +1,12 @@
+label{
+    margin-bottom: 0.5em;
+    width: 9em;
+}
+.log-box{
+    margin: 30px auto;
+    width: 50%;
+}
+.errmsg{
+    font-style: italic;
+    background-color: rgb(255,153,153);
+}
