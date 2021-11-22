@@ -1,0 +1,24 @@
+/*#logout-button{
+    float: right;
+}*/
+#logout-button > button{
+    background-color: rgb(66, 167, 245);
+    font-size: 20px;
+    color: white;
+    border: none;
+}
+#logout-button > button:hover{
+    background-color: rgb(66, 117, 245);
+}
+.nav-bar{
+    padding: 0px;
+    display: inline-block;
+    width: 20%;
+    background-color: lightblue;
+}
+.main-view{
+    padding: 0px;
+    display: inline-block;
+    width: 70%;
+    background-color: lightcoral;
+}
