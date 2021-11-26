@@ -1,12 +1,18 @@
 /*#logout-button{
     float: right;
 }*/
-body{
+.website-body{
     display: flex;
+    height: 100%;
+    position: relative;
+    top: -30px;
 }
 table, td, th{
     text-align: center;
     margin: auto;
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
 }
 .errmsg{
     font-style: italic;
@@ -29,6 +35,19 @@ table, td, th{
 #logout-button > button:hover{
     background-color: rgb(66, 117, 245);
 }
+.head{
+    text-align: center;
+    background-color: rgb(72,133,217);
+    margin: 0px;
+    margin-bottom: 10px;
+    top: -20px;
+    position: relative;
+    width: 100%;
+    height: 8%;
+}
+.tag-link{
+    margin: 15%;
+}
 .nav-bar{
     padding: 0px;
     display: inline-block;
@@ -41,8 +60,6 @@ table, td, th{
     padding: 0px;
     display: inline-block;
     height: 100%;
-    width: 70%;
-    background-color: lightcoral;
 }
 .personal-info{
     display: inline-block;
@@ -56,3 +73,4 @@ input[type=emai]{
     width: 100%;
     height: 40%;
 }
+

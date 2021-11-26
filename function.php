@@ -108,5 +108,21 @@ if($mn == 0 || $mn == 1){
         $codeerr = "31"; //the service name is already existed
         header("Location:adminview.php?mn=$mn&codeerr=$codeerr&addservice=true");
     }
+}else if($mn == 5){
+    $name = filter_input(INPUT_POST,"name");
+    $address = filter_input(INPUT_POST,"address");
+    $phone = filter_input(INPUT_POST,"phone");
+
+    $insert = "insert into $table_name (name,address,phone) values('$name','$address','$phone')";
+    $result2 = mysqli_query($conn, $insert);
+
+    if(!$result2){
+        $codeerr = "51"; //something happens with database
+        header("Location:adminview.php?mn=$mn&addmerchant=true&codeerr=$codeerr");
+    }else{
+        $success = "true";
+        header("Location:adminview.php?mn=$mn&addmerchant=true&success=$success");
+    }
+
 }
 ?>

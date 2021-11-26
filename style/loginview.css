@@ -10,3 +10,13 @@ label{
     font-style: italic;
     background-color: rgb(255,153,153);
 }
+.head{
+    text-align: center;
+    background-color: rgb(72,133,217);
+    margin: 0px;
+    margin-bottom: 10px;
+    top: -20px;
+    position: relative;
+    width: 100%;
+    height: 8%;
+}

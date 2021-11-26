@@ -43,3 +43,9 @@ function checkNum(){
     document.getElementById('priceerr').style.display = check3 ? "none" : "block"
     document.getElementById('tech-submit').disabled = !check2 || !check3
 }
+function checkPhoneOnly(){
+    var phone = document.getElementById('phone').value
+    var check1 = phone.replace(/\D/g,'').length === 10
+    document.getElementById('phoneerror').style.display = check1 ? "none" : "block"
+    document.getElementById('tech-submit').disabled = !check1
+}

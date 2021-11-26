@@ -4,6 +4,9 @@ session_start();
 if (!isset($_SESSION["username"])) {
     header("Location: employeelogin.php");
 }
+if(isset($_SESSION["privilege"]) && $_SESSION["privilege"] != 2 ){
+    header("Location: employeelogin.php");
+}
 $logout = filter_input(INPUT_GET, "logout");
 if ($logout) {
     session_destroy();
@@ -19,10 +22,14 @@ if ($logout) {
         <title>Employee</title>
     </head>
     <body>
-        <p>Hello from staff view</p>
-        <a href="./staffview.php?logout=true" id="logout-button">
-            <button class="btn btn-default">LOG OUT</button> 
-        </a>
+        <div class="head">
+            <h1>NAILSTORE</h1>
+        </div>
+        <div>
+            <p>Hello from staff view, the privilege is <?php print $_SESSION['privilege'] ?> </p>
+            <a href="./staffview.php?logout=true" id="logout-button">
+                <button class="btn btn-default">LOG OUT</button> 
+            </a>
         </div>
     </body>
 </html>

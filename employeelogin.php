@@ -47,8 +47,7 @@ if($login){
         }
     }else{
         $errmsg = "This username doesn't exist. Please try again!";
-    }
-    
+    } 
     
 }
 
@@ -62,6 +61,9 @@ if($login){
         <title>LogIn</title>
     </head>
     <body>
+        <div class="head">
+            <h1>NAILSTORE</h1>
+        </div>
         <div class="body-box">
             <div class="log-box">
                 <p class="errmsg"><?php print $errmsg ?></p>
