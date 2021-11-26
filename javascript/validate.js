@@ -1,0 +1,34 @@
+function validate(){
+    var phone = document.getElementById('phone').value
+    var dob = document.getElementById('dob').value
+    var check1 = phone.replace(/\D/g,'').length === 10
+
+    var regEx = /^\d{4}-\d{2}-\d{2}$/;
+    if(!dob.match(regEx)) 
+        var check2 = false
+    else{
+        var d = new Date(dob)
+        var dNum = d.getTime()
+        if(!dNum && dNum !== 0) 
+            var check2 = false
+        try{
+            var check2 = d.toISOString().slice(0,10) === dob
+        }catch(e){
+            var check2 = false
+        }
+    }
+    if(check1){
+        document.getElementById('phoneerror').style.display = "none"
+    }else{
+        document.getElementById('phoneerror').style.display = "block"
+    }
+    if(check2){
+        document.getElementById('bderror').style.display = "none"
+    }else{
+        document.getElementById('bderror').style.display = "block"
+    }
+    if(!check1 || !check2)
+        document.getElementById('tech-submit').disabled = true
+    else        
+        document.getElementById('tech-submit').disabled = false
+}

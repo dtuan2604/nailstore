@@ -1,6 +1,25 @@
 /*#logout-button{
     float: right;
 }*/
+body{
+    display: flex;
+}
+table, td, th{
+    text-align: center;
+    margin: auto;
+}
+.errmsg{
+    font-style: italic;
+    background-color: rgb(255,153,153);
+}
+.succmsg{
+    font-style: italic;
+    background-color: rgb(108,245,143);
+}
+#add-info-button, #tech-submit{
+    margin-top: 3%;
+    margin-left: 80%;
+}
 #logout-button > button{
     background-color: rgb(66, 167, 245);
     font-size: 20px;
@@ -14,11 +33,26 @@
     padding: 0px;
     display: inline-block;
     width: 20%;
+    height: 100%;
     background-color: lightblue;
+    text-align: center;
 }
 .main-view{
     padding: 0px;
     display: inline-block;
+    height: 100%;
     width: 70%;
     background-color: lightcoral;
+}
+.personal-info{
+    display: inline-block;
+    width: 40%;
+    margin: 2%;
+    height: 15%;
+}
+input[type=text], 
+input[type=password],
+input[type=email]{
+    width: 100%;
+    height: 40%;
 }
