@@ -15,8 +15,8 @@ $dbname = "nailstore";
 $conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
 $mn = intval(filter_input(INPUT_GET, "mn"));
 
-$tblArr = array("nail_technician","customer","marchandise","service","meeting");
-$optArr = array("Technician","Customer","Merchandise","Service","Meeting");
+$tblArr = array("nail_technician","customer","marchandise","service","meeting","marchant");
+$optArr = array("Technician","Customer","Merchandise","Service","Meeting","Merchant");
 $table_name = $tblArr[$mn];
 
 if($mn == 0){
@@ -37,11 +37,13 @@ if($mn == 0){
     $fields[0] = "Service ID"; $fields[1] = "Service Name"; $fields[2] = "Service Type";
     $fields[3] = "Picture"; $fields[4] = "Duration"; $fields[5] = "Price"; 
     $addservice = filter_input(INPUT_GET, "addservice");
-}else{
+}else if($mn == 4){
     $fields[] = "Meeting ID"; $fields[] = "Total Price"; $fields[] = "Start Time";
     $fields[] = "End Time"; $fields[] = "Date"; $fields[] = "Meeting Type";
     $fields[] = "Review"; $fields[] = "Technician ID"; $fields[] = "Customer ID";
     $fields[] = "Technician Name"; $fields[] = "Customer Name";
+}else if($mn == 5){
+    $fields[] = "Merchant ID"; $fields[] = "Name"; $fields[] = "Address"; $fields[] = "Phone Number";
 }
 //Fetch the Current table and print it out
 $data2dArr = array();
@@ -215,9 +217,84 @@ while ($line = mysqli_fetch_assoc($result2)) {
                         <button class="btn btn-default" id="add-info-button">Cancel</button>   
                     </a>
             <?php }else if($mn == 2 && $addmerchandise == "true"){ ?>
-                
+                <?php $coderr = filter_input(INPUT_GET,"codeerr");
+                    $success = filter_input(INPUT_GET,"success"); 
+                    $merchandise = filter_input(INPUT_GET,"merchandise");
+                    if($coderr == "21"){
+                        print "<p class='errmsg'>This marchantID is not existed! Please go to Merchant table to check the ID.</p>";  
+                    }else if($coderr == "22"){
+                        print "<p class='errmsg'>Cannot add this item!</p>";  
+                    }else if($coderr == "23"){
+                        print "<p class='errmsg'>The number of quantity must be a positive integer!</p>";
+                    }
+                    if($success){
+                        print "<p class='succmsg'>Successfully add this item!</p>";
+                    }
+                    ?>
+                    <form action="function.php" method="post">
+                        <input type="hidden" name="mn" value="<?php print $mn ?>" />
+                        <div class="personal-info">
+                            <label>Merchandise Name:</label><br />
+                            <input type="text" name="merchandise" value="<?php print $merchandise ?>" required/>
+                        </div>
+                        <div class="personal-info">
+                            <label>Merchant ID:</label><br />
+                            <input type="text" name="merchantid" required/>
+                        </div>
+                        <div class="personal-info">
+                            <label>Current available quantity:</label><br />
+                            <input type="text" name="quantity" required/>
+                        </div><br />
+                        <input type="submit" id="tech-submit" class="btn btn-default" />
+                    </form>
+                    <a href="./adminview.php?mn=<?php print $mn ?>">
+                        <button class="btn btn-default" id="add-info-button">Cancel</button>   
+                    </a>
             <?php }else if($mn == 3 && $addservice == "true"){ ?>
-                
+                <?php $coderr = filter_input(INPUT_GET,"codeerr");
+                    $success = filter_input(INPUT_GET,"success"); 
+                    if($coderr == "31"){
+                        print "<p class='errmsg'>This service name is already existed!</p>";  
+                    }else if($coderr == "32"){
+                        print "<p class='errmsg'>Cannot add this service!</p>";  
+                    }
+                    if($success){
+                        print "<p class='succmsg'>Successfully add this service!</p>";
+                    }
+                ?>
+                    <form action="function.php" method="post">
+                        <input type="hidden" name="mn" value="<?php print $mn ?>" />
+                        <div class="personal-info">
+                            <label>Service Name:</label><br />
+                            <input type="text" name="name" required/>
+                        </div>
+                        <div class="personal-info">
+                            <label>Service Type:</label><br />
+                            <input type="text" name="type" id="type" required/>
+                        </div>
+                        <div class="personal-info" style="width: 70%">
+                            <label>Picture(URL):</label><br />
+                            <input type="text" name="picture" required/>
+                        </div>
+                        <div class="personal-info">
+                            <label>Duration:</label><br />
+                            <input type="text" name="duration" id="duration" onchange="checkNum()" required/>
+                            <p class="errmsg" style="display: none; font-size: small; position: absolute" id="durerror">
+                                Please enter a positive integer number!                            
+                            </p>
+                        </div>
+                        <div class="personal-info">
+                            <label>Price:</label><br />
+                            <input type="text" name="price" id="price" onchange="checkNum()" required/>
+                            <p class="errmsg" style="display: none; font-size: small; position: absolute" id="priceerr">
+                                Please enter a positive integer number!                            
+                            </p>
+                        </div>
+                        <input type="submit" id="tech-submit" class="btn btn-default" />
+                    </form>
+                    <a href="./adminview.php?mn=<?php print $mn ?>">
+                        <button class="btn btn-default" id="add-info-button">Cancel</button>   
+                    </a>
             <?php }else{ ?>
             <table>
                 <tr>
@@ -243,6 +320,7 @@ while ($line = mysqli_fetch_assoc($result2)) {
                 else if($mn == 1) {print "addcustomer=true";}
                 else if($mn == 2) {print "addmerchandise=true";}
                 else if($mn == 3) {print "addservice=true" ;}
+                else if($mn == 5) {print "addmerchant=true";}
             ?>">
                 <button class="btn btn-default" id="add-info-button">
                     <?php
@@ -250,6 +328,7 @@ while ($line = mysqli_fetch_assoc($result2)) {
                         else if($mn == 1) {print "Add Customer";}
                         else if($mn == 2) {print "Add Item";}
                         else if($mn == 3) {print "Add Service" ;}
+                        else if($mn == 5) {print "Add Merchant";}
                     ?>
                 </button>
             </a>

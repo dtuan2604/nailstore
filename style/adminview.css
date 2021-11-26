@@ -52,7 +52,7 @@ table, td, th{
 }
 input[type=text], 
 input[type=password],
-input[type=email]{
+input[type=emai]{
     width: 100%;
     height: 40%;
 }

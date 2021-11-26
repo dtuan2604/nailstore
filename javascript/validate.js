@@ -32,3 +32,14 @@ function validate(){
     else        
         document.getElementById('tech-submit').disabled = false
 }
+function checkNum(){
+    var dur = document.getElementById('duration').value
+    var price = document.getElementById('price').value
+
+    var check2 = !isNaN(dur) && Number.parseInt(dur) > 0
+    var check3 = !isNaN(price) && Number.parseInt(price) > 0
+
+    document.getElementById('durerror').style.display = check2 ? "none" : "block"
+    document.getElementById('priceerr').style.display = check3 ? "none" : "block"
+    document.getElementById('tech-submit').disabled = !check2 || !check3
+}
