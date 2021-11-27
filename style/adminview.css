@@ -7,12 +7,25 @@
     position: relative;
     top: -30px;
 }
+.review-card{
+    margin: 10px;
+    display: inline-block;
+    width: 40%;
+    border: solid black;
+    box-shadow:
+    0 1px 1px rgba(0,0,0,0.20),
+    0 10px 0 -5px #eee;
+}
 table, td, th{
     text-align: center;
     margin: auto;
     border: 1px solid black;
     border-collapse: collapse;
     padding: 5px;
+}
+a #cancel-button{
+    position: relative;
+    top: -40px;
 }
 .errmsg{
     font-style: italic;
@@ -22,7 +35,7 @@ table, td, th{
     font-style: italic;
     background-color: rgb(108,245,143);
 }
-#add-info-button, #tech-submit{
+#add-info-button, #tech-submit, a #cancel-button{
     margin-top: 3%;
     margin-left: 80%;
 }
@@ -60,6 +73,7 @@ table, td, th{
     padding: 0px;
     display: inline-block;
     height: 100%;
+    width: 80%;
 }
 .personal-info{
     display: inline-block;

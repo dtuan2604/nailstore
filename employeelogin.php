@@ -37,6 +37,7 @@ if($login){
             $_SESSION["firstname"] = $line["fname"];
             $_SESSION["username"] = $line["username"];
             $_SESSION["privilege"] = $line["privilege"];
+            $_SESSION["id"] = $line["userid"];
             if($_SESSION["privilege"] == 1){
                 header("Location: adminview.php");
             }else{

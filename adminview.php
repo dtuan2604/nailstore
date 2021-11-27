@@ -90,7 +90,7 @@ while ($line = mysqli_fetch_assoc($result2)) {
                 <?php
                     for ($i = 0; $i < count($optArr); $i++) {
                         ?>
-                        <p class="tag-link" style="<?php if($mn==$i) print 'font-size: 20px; margin-left: 0px; margin-right: 0px; padding: 0px; background-color: rgb(72,133,217);' ?>">
+                        <p class="tag-link" style="<?php if($mn==$i) {print 'font-size: 20px; margin-left: 0px; margin-right: 0px; padding: 0px; background-color: rgb(72,133,217);';} ?>">
                             <?php
                             if ($mn == $i) {
                                 ?>
@@ -171,7 +171,7 @@ while ($line = mysqli_fetch_assoc($result2)) {
                     <input type="submit" id="tech-submit" class="btn btn-default" />
                 </form>
                 <a href="./adminview.php?mn=<?php print $mn ?>">
-                    <button class="btn btn-default" id="add-info-button">Cancel</button>   
+                    <button class="btn btn-default" id="cancel-button">Cancel</button>   
                 </a>
                 <?php }else if($mn == 1 && $addcustomer == "true"){ ?>
                     <?php $coderr = filter_input(INPUT_GET,"codeerr");
@@ -224,7 +224,7 @@ while ($line = mysqli_fetch_assoc($result2)) {
                             <input type="submit" id="tech-submit" class="btn btn-default" />
                         </form>
                         <a href="./adminview.php?mn=<?php print $mn ?>">
-                            <button class="btn btn-default" id="add-info-button">Cancel</button>   
+                            <button class="btn btn-default" id="cancel-button">Cancel</button>   
                         </a>
                 <?php }else if($mn == 2 && $addmerchandise == "true"){ ?>
                     <?php $coderr = filter_input(INPUT_GET,"codeerr");
@@ -258,7 +258,7 @@ while ($line = mysqli_fetch_assoc($result2)) {
                             <input type="submit" id="tech-submit" class="btn btn-default" />
                         </form>
                         <a href="./adminview.php?mn=<?php print $mn ?>">
-                            <button class="btn btn-default" id="add-info-button">Cancel</button>   
+                            <button class="btn btn-default" id="cancel-button">Cancel</button>   
                         </a>
                 <?php }else if($mn == 3 && $addservice == "true"){ ?>
                     <?php $coderr = filter_input(INPUT_GET,"codeerr");
@@ -303,7 +303,7 @@ while ($line = mysqli_fetch_assoc($result2)) {
                             <input type="submit" id="tech-submit" class="btn btn-default" />
                         </form>
                         <a href="./adminview.php?mn=<?php print $mn ?>">
-                            <button class="btn btn-default" id="add-info-button">Cancel</button>   
+                            <button class="btn btn-default" id="cancel-button">Cancel</button>   
                         </a>
                 <?php }else if($mn == 5 && $addmerchant == "true"){ ?>
                     <?php $coderr = filter_input(INPUT_GET,"codeerr");
@@ -336,7 +336,7 @@ while ($line = mysqli_fetch_assoc($result2)) {
                             <input type="submit" id="tech-submit" class="btn btn-default" />
                         </form>
                         <a href="./adminview.php?mn=<?php print $mn ?>">
-                            <button class="btn btn-default" id="add-info-button">Cancel</button>   
+                            <button class="btn btn-default" id="cancel-button">Cancel</button>   
                         </a>
                 <?php }else{ ?>
                 <table>
