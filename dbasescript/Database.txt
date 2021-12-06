@@ -1,0 +1,314 @@
+DROP DATABASE IF EXISTS `nailstore`;
+CREATE DATABASE IF NOT EXISTS `nailstore` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `nailstore`;
+
+/*
+TO-DO-LIST:
+	nail_technician.privilege: value 2 means employee, value 1 means employer.
+	meeting.type: value 1 means walk-in meeting, value 2 means appointment meeting.
+*/
+
+DROP TABLE IF EXISTS `schedule`;
+CREATE TABLE IF NOT EXISTS `schedule` (
+	`scheduleID` int not null auto_increment,
+	`weekday` varchar(10) not null default '',
+	PRIMARY KEY (scheduleID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `schedule`(`weekday`) VALUES
+('Monday'),
+('Tuesday'),
+('Wednesday'),
+('Thursday'),
+('Friday'),
+('Saturday'),
+('Sunday');
+
+DROP TABLE IF EXISTS `nail_technician`;
+CREATE TABLE IF NOT EXISTS `nail_technician` (
+	`userid` int not null auto_increment,
+	`username` varchar(30) not null default '',
+	`password` varchar(30) not null default '',
+	`fname` varchar(30) not null default '',
+	`lname` varchar(30) not null default '',
+	`phone` varchar(15) not null default '',
+	`dob` date default null,
+	`privilege` int default 2,
+	PRIMARY KEY (userid)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `nail_technician` (`username`, `password`, `fname`, `lname`, `phone` , `dob`, `privilege`) VALUES
+('Tyreserobinson23','FDG324','Tyrese','Robinson','314-645-3432', '2004-05-05', 1),
+('anthonynguyen34','A123456','Anthony','Nguyen','314-609-3456', '2005-05-05', 2),
+('tony345','6123456','Tony','Jaboc','314-609-3456', '2005-05-05', 2),
+('Iamtuan09','A123456','Tuan','Quoc','314-609-3456', '2005-05-05', 2),
+('KimBerly342','6123456','Kim','Berly','314-609-3456', '2005-05-05', 2),
+('David777','A123456','David','Mac','314-609-3456', '2005-05-05', 2);
+
+DROP TABLE IF EXISTS `has_schedule`;
+CREATE TABLE IF NOT EXISTS `has_schedule` (
+	`technicianID` int not null,
+	`scheduleID` int not null,
+	FOREIGN KEY(technicianID) references nail_technician(userid),
+	FOREIGN KEY(scheduleID) references schedule(scheduleID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+INSERT INTO `has_schedule` (`technicianID`, `scheduleID`) VALUES
+(1,1),
+(1,2),
+(1,3),
+(1,4),
+(1,5),
+(1,6);
+
+DROP TABLE IF EXISTS `payroll`;
+CREATE TABLE IF NOT EXISTS `payroll` (
+	`payrollid` int not null auto_increment,
+	`cash_advance` double not null default 0.00,
+	`monthly_sal` double not null default 0.00,
+	`tax` double not null default 0.2,
+	`date` date default null,
+	`technicianID` int not null,	
+	PRIMARY KEY (payrollid),
+	FOREIGN KEY(technicianID) references nail_technician(userid)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `payroll` ( `cash_advance`, `monthly_sal`, `tax`, `date`,`technicianID`) VALUES
+(0,10000,0.2,'2020-10-21',1),
+(0,5000,0.2,'2020-10-21',2),
+(0,5000,0.2,'2020-10-21',3),
+(0,5000,0.2,'2020-10-21',4),
+(0,5000,0.2,'2020-10-21',5),
+(0,5000,0.2,'2020-10-21',6);
+
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE IF NOT EXISTS `customer` (
+	`customerID` int not null auto_increment,
+	`fname` varchar(30) not null default '',
+	`lname` varchar(30) not null default '',
+	`email` varchar(40) not null default '',
+	`password` varchar(30) not null default '',
+	`dob` date default null,
+	`point_reward` int default null,
+	`phone` varchar(12) not null default '',
+	`picture` varchar(100) default null,
+	PRIMARY KEY (customerID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `customer` (`fname`, `lname`, `email` , `password`, `dob`, `phone`,`picture`) VALUES
+('Nay', 'Nay', 'naynay345@gmail.com', '234534', '2000-07-07', '314-543-4323', NULL),
+('Bi', 'Bi', 'bibi345@gmail.com', '234534', '2000-07-07', '314-543-4323','https://avatarfiles.alphacoders.com/192/thumb-1920-192768.png
+'),
+('Nathan', 'Tran', 'naynay345@gmail.com', '234534', '2000-07-07', '314-543-4323','https://caitlinball.com/wp-content/uploads/2016/12/circle_profile.png
+'),
+('Chirst', 'Rona', 'bibi345@gmail.com', '234534', '2000-07-07', '314-543-4323','https://www.nicepng.com/png/full/182-1829287_cammy-lin-ux-designer-circle-picture-profile-girl.png
+'),
+('Nikki', 'Jan', 'naynay345@gmail.com', '234534', '2000-07-07', '314-543-4323','https://www.nicepng.com/png/full/182-1829287_cammy-lin-ux-designer-circle-picture-profile-girl.png
+');
+
+DROP TABLE IF EXISTS `meeting`;
+CREATE TABLE IF NOT EXISTS `meeting` (
+	`meetingID` int not null auto_increment,
+	`total_price` double not null default 0.00,
+	`s_time` time(0) not null default '09:00:00', 
+	`e_time` time(0) default null,
+	`date` date default null, 
+	`type` int not null default 1,
+	`review` varchar(300) default null,
+	`technicianID` int not null,
+	`customerID` int not null,
+	PRIMARY KEY (meetingID),
+	FOREIGN KEY(technicianID) references nail_technician(userid),
+	FOREIGN KEY(customerID) references customer(customerID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `meeting` (`total_price`, `s_time`, `e_time` ,`date`,`type`, `technicianID`, `customerID`) VALUES
+(100, '09:00:00', '10:00:00', '2021-09-09',1, 2,1),
+(200, '11:00:00', '12:00:00', '2021-09-09',1, 2,2),
+(50, '13:00:00', '14:00:00', '2021-09-09',2, 2,3),
+(70, '15:00:00', '16:00:00', '2021-09-09',1, 2,4),
+(80, '17:00:00', '18:00:00', '2021-09-09',2, 2,5),
+(90, '18:00:00', '19:00:00', '2021-09-09',1, 2,1);
+
+DROP TABLE IF EXISTS `service`;
+CREATE TABLE IF NOT EXISTS `service` (
+	`serviceID` int not null auto_increment,
+	`name` varchar(30) not null default '',
+	`type` varchar(10) not null default '',
+	`picture` varchar(100) not null default '',
+	`duration_min` int(4) not null default 30, 
+	`price` double not null default 0.00,
+	PRIMARY KEY (serviceID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `service` (`name`, `type`, `picture` , `duration_min`, `price`) VALUES
+('Pedicure', '1', 'https://www.betunails.com/wp-content/uploads/2016/11/Spa-pedicure-dover-de-1024x1024.jpg', '30', 40),
+('Manicure', '2', 'https://cdn.shopify.com/s/files/1/1836/8607/products/softglowfrenchmedium_1800x1800.jpg?v=1611609998', '20', 35),
+('Eyebrow', '3', 'https://hajiwon.vn/uploads/editer/images/dieu-khac-chan-may-bao-lau-thi-dep-t11-03.jpg', '5', 10);
+
+DROP TABLE IF EXISTS `has_service`;
+CREATE TABLE IF NOT EXISTS `has_service` (
+	`meetingID` int not null,
+	`serviceID` int not null,
+	FOREIGN KEY(meetingID) references meeting(meetingID),
+	FOREIGN KEY(serviceID) references service(serviceID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `has_service` (`meetingID`, `serviceID`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 1),
+(3, 2),
+(4, 1);
+
+DROP TABLE IF EXISTS `does_service`;
+CREATE TABLE IF NOT EXISTS `does_service` (
+	`technicianID` int not null,
+	`serviceID` int not null,
+	FOREIGN KEY(serviceID) references service(serviceID),
+	FOREIGN KEY(technicianID) references nail_technician(userid)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `does_service` (`technicianID`, `serviceID`) VALUES
+(2, 1),
+(2, 2),
+(2, 3),
+(3, 1),
+(4, 2),
+(4, 1);
+
+
+
+DROP TABLE IF EXISTS `review_technician`;
+CREATE TABLE IF NOT EXISTS `review_technician` (
+	`customerID` int not null, 
+	`technicianID` int not null, 
+	`review_text` varchar(300) default null,
+	FOREIGN KEY(technicianID) references nail_technician(userid),
+	FOREIGN KEY(customerID) references customer(customerID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `review_technician` (`customerID`, `technicianID`, `review_text`) VALUES
+(2, 2, 'Really good'),
+(5, 3, 'Really bad'),
+(4, 3, 'Really bad'),
+(3, 3, 'Really bad'),
+(2, 3, 'Really bad'),
+(2, 4, 'Really good'),
+(3, 1, 'Really good'),
+(4, 2,'Really bad'),
+(4, 1,'Really bad');
+
+
+DROP TABLE IF EXISTS `marchant`;
+CREATE TABLE IF NOT EXISTS `marchant` (
+	`marchantID` int not null auto_increment,
+	`name` varchar(30) not null default '',
+	`address` varchar(50) not null default '',
+	`phone` varchar(12) not null default '',
+	PRIMARY KEY (marchantID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `marchant` (`name`, `address`, `phone`) VALUES
+('Shop1', '123abd', '3145647875'),
+('Shop2', '123abd', '3145647875'),
+('Shop3', '123abd', '3145647875'),
+('Shop4', '123abd', '3145647875'),
+('Shop5', '123abd', '3145647875'),
+('Shop6', '123abd', '3145647875');
+
+
+DROP TABLE IF EXISTS `service_package`;
+CREATE TABLE IF NOT EXISTS `service_package` (
+	`packageID` int not null auto_increment,
+	`name` varchar(30) not null default '',
+	`price` double not null default 0.00,
+	PRIMARY KEY (packageID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `service_package` (`name`, `price`) VALUES
+('HotDeal1', 100),
+('HotDeal2', 100),
+('HotDeal3', 100),
+('HotDeal4', 100),
+('HotDeal5', 100);
+
+
+
+DROP TABLE IF EXISTS `package_contain`;
+CREATE TABLE IF NOT EXISTS `package_contain` (
+	`packageID` int not null,
+	`serviceID` int not null,
+	FOREIGN KEY(packageID) references service_package(packageID),
+	FOREIGN KEY(serviceID) references service(serviceID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `package_contain` (`packageID`, `serviceID`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 1),
+(2, 2),
+(3, 1);
+
+
+DROP TABLE IF EXISTS `marchandise`;
+CREATE TABLE IF NOT EXISTS `marchandise` (
+	`marchandiseID` int not null auto_increment,
+	`name` varchar(30) not null default '',
+	`quantity` int(5) not null default 1,
+	`marchantID` int not null,
+	PRIMARY KEY (marchandiseID),
+	FOREIGN KEY(marchantID) references marchant(marchantID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `marchandise` (`name`, `quantity`, `marchantID` ) VALUES
+('NailTip', 100, 1),
+('File', 100, 1),
+('Ancohol', 100, 2),
+('Spa', 100, 1),
+('Polish', 100, 2),
+('Glue', 100, 1);
+
+DROP TABLE IF EXISTS `supply`;
+CREATE TABLE IF NOT EXISTS `supply` (
+	`marchandiseID` int not null,
+	`serviceID` int not null,
+	FOREIGN KEY(serviceID) references service(serviceID),
+	FOREIGN KEY(marchandiseID) references marchandise(marchandiseID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `supply` (`marchandiseID`, `serviceID`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 1),
+(2, 2),
+(2, 3);
+
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE IF NOT EXISTS `order` (
+	`marchandiseID` int not null,
+	`date` date default null,
+	`quantity` int(5) not null default 1,
+	`marchantID` int not null,
+	`status` varchar(15) not null,
+	FOREIGN KEY(marchandiseID) references marchandise(marchandiseID),
+	FOREIGN KEY(marchantID) references marchant(marchantID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `order` (`marchandiseID`,`date`, `quantity`, `marchantID`, `status`) VALUES
+(1, '2021-09-10',100,1,"Received"),
+(2, '2021-09-10',100,1,"Received"),
+(3, '2021-09-10',100,1,"Received"),
+(4, '2021-09-10',100,1,"Not received"),
+(5, '2021-09-10',100,2,"Not received"),
+(6, '2021-09-10',100,1,"Not received");
+
+
+
+
+
+
