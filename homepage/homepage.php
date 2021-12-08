@@ -38,7 +38,7 @@ $result2 = mysqli_query($conn, $query2);
                     <ul>
                         <li><a href="homepage.php">Home</a></li>
                         <li><a href="">Services</a></li>
-                        <li><a href="">About</a></li>
+                        <li><a href="about.php">About</a></li>
                         <li><a href="">Contact</a></li>
 
                         <?php 
@@ -62,7 +62,7 @@ $result2 = mysqli_query($conn, $query2);
                 <h1>Welcome to<br> Nail Shop!</h1>
                 <p> Where that you can live with your new style and <br>
                 enjoy every minute of your life with beauty</p>
-                <a href="" class ="btn">Booking Our Service Now &#8594;</a>
+                <a href="./booking.php" class ="btn">Booking Our Service Now &#8594;</a>
             </div>
 
 
