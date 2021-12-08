@@ -16,12 +16,11 @@ Please follow this guide to run our project.
 	blank box under SQL tab and run it.
 2. How to run the project:
 	S1: Open Xampp and start Apache and MySQL
-	S2: Copy the source code and put it under 'C:\xampp\htdocs' directory
-	S3: Open the Google Chrome web browser, type URL: "http://localhost/nailstore/homepage/homepage.php" to access the 
-main customer page.
-
-Note: We are currently still building the customer website. However, the admin page is done. You could access
-the page by the link: "http://localhost/nailstore/admin/employeelogin.php" and login using one of nail technician
-credentials in the database. 
+	S2: Copy the source code with the directory 'nailstore', and put it under 'C:\xampp\htdocs' directory
+	S3: Open the Google Chrome web browser: 
+                Type URL: "http://localhost/nailstore/homepage/homepage.php" to access the main customer page. 
+                Type URL: "http://localhost/nailstore/admin/adminview.php" to access the admin page, using the credential provided in the database.
+                Type URL: "http://localhost/nailstore/admin/staffview.php" to access the staff page, using the credential provided in the database.
+                
 
 
